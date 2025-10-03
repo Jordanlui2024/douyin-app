@@ -5,7 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,25 +14,40 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+      with:
+        fetch-depth: 0  # 获取完整历史记录
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
         
-    - name: Install Buildozer and dependencies
+    - name: Install system dependencies
       run: |
-        sudo apt update
-        sudo apt install -y git unzip openjdk-11-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-        pip install --user buildozer
+        sudo apt-get update
+        sudo apt-get install -y \
+          git unzip openjdk-11-jdk \
+          python3-pip autoconf libtool pkg-config \
+          zlib1g-dev libncurses5-dev libncursesw5-dev \
+          libtinfo5 cmake libffi-dev libssl-dev
+        
+    - name: Install Buildozer
+      run: pip install --user buildozer
+        
+    - name: Configure Git (fix potential issues)
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
         
     - name: Build APK with Buildozer
       run: |
         export PATH=$PATH:~/.local/bin
-        buildozer -v android debug
-        
+        buildozer android debug
+      
     - name: Upload APK
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: "抖音下载工具-APK"
         path: bin/*.apk
+        retention-days: 5
