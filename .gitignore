@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+*.mo
+*.pot
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Buildozer
+.buildozer/
+bin/
+.gradle/
+local.properties
+
+# PyInstaller
+*.spec.backup
+build/
+dist/
+*.manifest
+*.spec
+
+# Kivy
+*.kv~
+
+# Backup files
+*.backup
+*_backup.py
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Temporary files
+mytmp.py
+tmp/
+temp/
+
